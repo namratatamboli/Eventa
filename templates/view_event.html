@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ event['event_name'] }} - Details</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0a2e3d, #e6e0c8, #4f7c74);
+      background-size: 300% 300%;
+      animation: gradientFlow 15s ease infinite;
+      color: #222;
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(10, 46, 61, 0.85);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+    nav .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #e6e0c8;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s, border-bottom 0.3s;
+    }
+    nav ul li a:hover {
+      color: #e6e0c8;
+      border-bottom: 2px solid #e6e0c8;
+    }
+
+    /* Event Card */
+    .event-details {
+      max-width: 800px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.2s ease;
+    }
+    .event-details h1 {
+      font-size: 32px;
+      color: #0a2e3d;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .event-details p {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+    .event-details strong {
+      color: #0a2e3d;
+    }
+
+    /* Budget Table */
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    table thead {
+      background: #0a2e3d;
+      color: #fff;
+    }
+    table th, table td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    table tr:hover {
+      background: #f3f7f6;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-block;
+      margin-top: 25px;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(45deg, #0a2e3d, #4f7c74);
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .back-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(10, 46, 61, 0.9);
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+      color: #e6e0c8;
+    }
+    footer ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    footer ul li a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer ul li a:hover {
+      color: #e6e0c8;
+    }
+    footer p {
+      font-size: 13px;
+      color: #ddd;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo"><strong>Eventa</strong></div>
+    <ul>
+      <li><a href="{{ url_for('landing') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Event Details -->
+  <section class="event-details">
+    <h1>{{ event['event_name'] }}</h1>
+
+    <p><strong>Date:</strong> {{ event['date'] }}</p>
+    <p><strong>Time:</strong> {{ event['time'] }}</p>
+    <p><strong>Venue:</strong> {{ event['venue'] }}</p>
+    <p><strong>Host:</strong> {{ event['host_name'] or 'N/A' }}</p>
+    <p><strong>Description:</strong> {{ event['description'] or 'No description' }}</p>
+    <p><strong>Guests:</strong> {{ event['guest_count'] or 'N/A' }}</p>
+    <p><strong>Total Budget:</strong> {{ event['budget'] if event['budget'] else 'Not set' }}</p>
+
+    <h2 style="margin-top:30px; color:#0a2e3d;">Budget Breakdown</h2>
+    {% if budgets %}
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in budgets %}
+          <tr>
+            <td>{{ b['category'] }}</td>
+            <td>{{ b['amount'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <p><strong>Total Spent:</strong> {{ total_spent }}</p>
+      <p><strong>Remaining:</strong> {{ remaining }}</p>
+    {% else %}
+      <p>No budget items added for this event.</p>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}" class="back-link">⬅ Back to Dashboard</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul>
+      <li><a href="{{ url_for('landing') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+    </ul>
+    <p>© 2025 Eventa. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

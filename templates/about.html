@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventa - About</title>
+  <style>
+    /* ---------- Global Reset ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background: #eae6cf;
+      color: #06293d;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ---------- Navbar ---------- */
+    nav {
+      background: #06293d;
+      color: #fff;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: slideDown 0.7s ease;
+    }
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #467b78;
+    }
+
+    /* ---------- About Section ---------- */
+    .about {
+      flex: 1;
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease;
+    }
+    .about h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      color: #06293d;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h2 {
+      margin-bottom: 15px;
+      color: #467b78;
+    }
+    .card p {
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    /* Tech stack badges */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .tech-item {
+      background: #467b78;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Team list */
+    .team-list {
+      list-style: none;
+      padding: 0;
+    }
+    .team-list li {
+      margin: 10px 0;
+      padding: 12px;
+      background: #f3f2e6;
+      border-left: 5px solid #467b78;
+      border-radius: 6px;
+    }
+    .team-list strong {
+      color: #06293d;
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: #06293d;
+      color: #ddd;
+      padding: 20px;
+      text-align: center;
+    }
+    footer ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 10px;
+    }
+    footer ul li a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer ul li a:hover {
+      color: #467b78;
+    }
+
+    /* ---------- Animations ---------- */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo"><strong>Eventa</strong></div>
+    <ul>
+      <li><a href="{{ url_for('landing') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- About Section -->
+  <section class="about">
+    <h1>About Eventa</h1>
+
+    <div class="card">
+      <h2>The App</h2>
+      <p>Eventa is a simple and efficient event planning system developed as part of our internship project. 
+         It offers tools to seamlessly handle event creation, guest tracking, and budget management within one organized space.</p>
+    </div>
+
+    <div class="card">
+      <h2>Tech Stack</h2>
+      <div class="tech-list">
+        <div class="tech-item">Python</div>
+        <div class="tech-item">Flask</div>
+        <div class="tech-item">SQLite</div>
+        <div class="tech-item">HTML</div>
+        <div class="tech-item">CSS</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Team</h2>
+      <ul class="team-list">
+        <li><strong>Namrata Tamboli</strong> – Handled UI/UX Design, Functionality implementation, and integration</li>
+        <li><strong>Shruti Bhoir</strong> – Worked on Backend Development and Database Handling</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Goal</h2>
+      <p>To gain hands-on experience with real-world web development by building a complete end-to-end application using Flask and Python.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul>
+      <li><a href="{{ url_for('landing') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+    </ul>
+    <p>© 2025 Eventa. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

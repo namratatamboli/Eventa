@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventa - Plan Your Events</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #eae6cf; /* Cream background */
+      color: #06293d;      /* Navy text */
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    nav {
+      background: #06293d;
+      color: #fff;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      animation: slideDown 0.6s ease;
+    }
+    nav .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #eae6cf;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #467b78; /* Teal */
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      animation: fadeIn 1.5s ease;
+    }
+    .hero-left h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #06293d;
+    }
+    .hero-left p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    .buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 25px;
+      border-radius: 8px;
+      background: #467b78;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s, background 0.3s;
+    }
+    .buttons a:hover {
+      transform: scale(1.05);
+      background: #35615f;
+    }
+
+    /* Features */
+    .features {
+      background: #fff;
+      border-radius: 12px;
+      padding: 60px 30px;
+      margin: 40px auto;
+      max-width: 900px;
+      text-align: center;
+      animation: fadeInUp 1.2s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .features h2 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #06293d;
+    }
+    .features ul {
+      list-style: none;
+      padding: 0;
+    }
+    .features ul li {
+      margin: 15px 0;
+      font-size: 18px;
+      color: #467b78;
+      position: relative;
+    }
+    .features ul li::before {
+      content: "✔";
+      color: #06293d;
+      font-weight: bold;
+      position: absolute;
+      left: -30px;
+    }
+
+    /* Footer */
+    footer {
+      background: #06293d;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      color: #fff;
+    }
+    footer ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+      padding: 0;
+    }
+    footer ul li a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer ul li a:hover {
+      color: #467b78;
+    }
+    footer p {
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+      {% for msg in messages %}
+      <li>{{ msg }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+
+  <!-- Navbar -->
+  <nav>
+      <div class="logo"><strong>Eventa</strong></div>
+      <ul>
+          <li><a href="{{ url_for('landing') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+      </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+      <div class="hero-left">
+          <h1>Your events, perfectly organized.</h1>
+          <p>
+              From weddings to college fests, Eventa helps you manage<br>
+              guests, budgets, and every detail – all in one smooth dashboard.
+          </p>
+          <div class="buttons">
+              <a href="{{ url_for('signup') }}">Get Started</a>
+              <a href="{{ url_for('login') }}">Login</a>
+          </div>
+      </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+      <h2>Why Choose Eventa?</h2>
+      <ul>
+          <li>Plan and organize events with ease</li>
+          <li>Keep track of your guest list</li>
+          <li>Manage budgets effectively</li>
+      </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+      <ul>
+          <li><a href="{{ url_for('landing') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+      </ul>
+      <p>© 2025 Eventa. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventa - Add Event</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0a2e3d, #e6e0c8, #4f7c74);
+      background-size: 300% 300%;
+      animation: gradientFlow 15s ease infinite;
+      line-height: 1.6;
+      color: #222;
+      padding-bottom: 60px;
+    }
+
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(10, 46, 61, 0.85);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    nav .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #e6e0c8;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s, border-bottom 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #e6e0c8;
+      border-bottom: 2px solid #e6e0c8;
+    }
+
+    .add-event textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.add-event button {
+  margin-top: 10px;
+}
+
+.add-event form:last-of-type {
+  margin-top: 15px;
+}
+
+.add-event input,
+.add-event textarea {
+  width: 100%;
+}
+
+
+    /* Add Event Section */
+    .add-event {
+      max-width: 800px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.2s ease;
+    }
+
+    .add-event h1 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: #0a2e3d;
+      text-align: center;
+    }
+
+    .add-event form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .add-event label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .add-event input,
+    .add-event textarea {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .add-event input:focus,
+    .add-event textarea:focus {
+      border-color: #4f7c74;
+      box-shadow: 0 0 8px rgba(79, 124, 116, 0.4);
+      outline: none;
+    }
+
+    .add-event button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #0a2e3d, #4f7c74);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .add-event button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(10, 46, 61, 0.9);
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+      margin-bottom:0px;
+      color: #e6e0c8;
+    }
+
+    footer ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    footer ul li a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer ul li a:hover {
+      color: #e6e0c8;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: #ddd;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo"><strong>Eventa</strong></div>
+    <ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('add_event') }}">Add Event</a></li>
+      <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Add Event Form -->
+  <section class="add-event">
+    <h1>Add Event Details</h1>
+
+    <!-- Save/Finalize form -->
+    <form action="{{ url_for('add_event', event_id=event_id) }}" method="POST">
+      <label>Event Name</label>
+      <input type="text" name="event_name" value="{{ event['event_name'] if event else '' }}" required>
+
+      <label>Description</label>
+      <textarea name="description">{{ event['description'] if event else '' }}</textarea>
+
+      <label>Host Name</label>
+      <input type="text" name="host_name" value="{{ event['host_name'] if event else '' }}">
+
+      <label>Date</label>
+      <input type="date" name="date" value="{{ event['date'] if event else '' }}" required>
+
+      <label>Time</label>
+      <input type="time" name="time" value="{{ event['time'] if event else '' }}" required>
+
+      <label>Venue</label>
+      <input type="text" name="venue" value="{{ event['venue'] if event else '' }}" required>
+
+      <label>Budget (optional)</label>
+      <input type="number" name="budget" min="0" step="1" value="{{ event['budget'] if event else '' }}">
+
+      <label>Guest Count (optional)</label>
+      <input type="number" name="guest_count" min="0" value="{{ event['guest_count'] if event else '' }}">
+
+      <input type="hidden" name="finalize" value="1">
+      <button type="submit">Save Event</button>
+    </form>
+
+    {% if event %}
+    <!-- Save draft & go to Budget -->
+    <form action="{{ url_for('add_event', event_id=event['id']) }}" method="POST">
+      <input type="hidden" name="event_name" value="{{ event['event_name'] }}">
+      <input type="hidden" name="description" value="{{ event['description'] }}">
+      <input type="hidden" name="host_name" value="{{ event['host_name'] }}">
+      <input type="hidden" name="date" value="{{ event['date'] }}">
+      <input type="hidden" name="time" value="{{ event['time'] }}">
+      <input type="hidden" name="venue" value="{{ event['venue'] }}">
+      <input type="hidden" name="budget" value="{{ event['budget'] }}">
+      <input type="hidden" name="guest_count" value="{{ event['guest_count'] }}">
+      <button type="submit" formaction="{{ url_for('manage_budget', event_id=event['id']) }}">Manage Budget</button>
+    </form>
+    {% endif %}
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('add_event') }}">Add Event</a></li>
+      <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+    <p>© 2025 Eventa. All rights reserved.</p>
+  </footer>
+
+</body>
+
+</html>
